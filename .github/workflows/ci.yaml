@@ -3,17 +3,17 @@ name: Documentation build and deploy
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
   workflow_dispatch:   # allow manual triggering
     inputs:
       deploy:
         description: 'Deploy wiki documentation'
         type: boolean
-        required: false
-        default: false
+        required: true
+        default: true
 
 jobs:
   build-linux:
