@@ -44,13 +44,13 @@ jobs:
           make html
           ls -lAFgh source/_build/html/index.html
 
-      - name: Deploy to GitHub Pages to https://nexusformat.github.io/wiki
+      - name: Deploy to GitHub Pages to https://russberg.github.io/wiki
         if: github.event.inputs.deploy || (github.event_name == 'push' && startswith(github.ref, 'refs/heads/master'))
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_branch: github-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: source/_build/html/
-          cname: www.nexusformat.org
+          # cname: www.nexusformat.org
           force_orphan: true
 
