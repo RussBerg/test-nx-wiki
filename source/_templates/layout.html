@@ -4,3 +4,8 @@
 {% extends "!layout.html" %}
 
 {% set css_files = css_files + ['_static/blockquote.css', '_static/rubric.css'] %}
+
+{% block extrahead %}
+  {{ super() }}
+  <meta name="algolia-site-verification" content="FE0EB363852A343E" />
+{% endblock %}
