@@ -1,0 +1,56 @@
+name: Documentation build and deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:   # allow manual triggering
+    inputs:
+      deploy:
+        description: 'Deploy wiki documentation'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  build-linux:
+    name: CI py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12']
+      max-parallel: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Requirements
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          make install
+          python3 -m pip list
+
+      - name: Build Wiki
+        run: |
+          make html
+          ls -lAFgh source/_build/html/index.html
+
+      - name: Deploy to GitHub Pages to https://nexusformat.github.io/wiki
+        if: github.event.inputs.deploy || (github.event_name == 'push' && startswith(github.ref, 'refs/heads/master'))
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_branch: github-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: source/_build/html/
+          cname: www.nexusformat.org
+          force_orphan: true
+
