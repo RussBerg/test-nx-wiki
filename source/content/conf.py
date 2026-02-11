@@ -70,6 +70,9 @@ html_title = ''
 # Disable the generation of genindex.html
 html_use_index = False
 html_copy_source = False
+html_extrahead = [
+    '<meta name="algolia-site-verification" content="FE0EB363852A343E" />'
+]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
