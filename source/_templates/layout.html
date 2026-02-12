@@ -5,3 +5,10 @@
 
 {% set css_files = css_files + ['_static/blockquote.css', '_static/rubric.css'] %}
 
+
+{% block extrahead %}
+  {{ super() }}
+  <meta name="algolia-site-verification" content="19A32177B310E89D" />
+{% endblock %}
+
+
